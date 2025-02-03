@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coches</title>
+</head>
+<body>
+    <h1>Coches</h1>
+    <hr>
+    <button id="cogeCoches">Obtener Coches</button>
+    <table id="tablaCoches" border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Color</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        document.getElementById('cogeCoches')
+        .addEventListener('click', () => {
+            fetch('/coches')
+            .then(response => response.json())
+            .then(data => {
+                const table = document.getElementById('tablaCoches');
+                const tbody = table.querySelector('tbody');
+                tbody.innerHTML = ''; // Limpia la tabla
+                for (coche of data)
+                {
+                    const fila = document.createElement('tr');
+                    fila.innerHTML = `
+                        <td>${coche._id}</td>
+                        <td>${coche.marca}</td>
+                        <td>${coche.modelo}</td>
+                        <td>${coche.color}</td>
+                        <td>${coche.precio}€</td>
+                    `;
+                    tbody.appendChild(fila);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
