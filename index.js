@@ -11,17 +11,18 @@ const { buscaTodos, buscaPorId, crearNuevoCoche, actualizaPrecio, borraCoche } =
 
 // Obtener todos los coches
 app.get("/coches", (req, res) => {
-  buscaTodos()
+  return buscaTodos()
     .then(coches => res.json(coches))
     .catch(err => res.status(500).json({
-      error: err.message
+      error: err.message,
+      throw: err
     }));
 });
 
 // Obtener un coche por ID
 app.get("/coches/:id", (req, res) => {
   const cocheId = req.params.id;
-  buscaPorId(cocheId)
+  return buscaPorId(cocheId)
     .then(coche => {
       if (coche) {
         res.json(coche);
@@ -30,17 +31,19 @@ app.get("/coches/:id", (req, res) => {
       }
     })
     .catch(err => res.status(500).json({
-      error: err.message
+      error: err.message,
+      throw: err
     }));
 });
 
 // Crear un nuevo coche
 app.post("/coches", (req, res) => {
   const { marca, modelo, color, precio } = req.body;
-  crearNuevoCoche(marca, modelo, color, precio)
+  return crearNuevoCoche(marca, modelo, color, precio)
     .then(coche => res.status(201).json(coche))
     .catch(err => res.status(500).json({
-      error: err.message
+      error: err.message,
+      throw: err
     }));
 });
 
@@ -48,7 +51,7 @@ app.post("/coches", (req, res) => {
 app.put("/coches/:id", (req, res) => {
   const cocheId = req.params.id;
   const { nuevoPrecio } = req.body;
-  actualizaPrecio(cocheId, nuevoPrecio)
+  return actualizaPrecio(cocheId, nuevoPrecio)
     .then(cocheActualizado => {
       if (cocheActualizado) {
         res.json(cocheActualizado);
@@ -57,14 +60,15 @@ app.put("/coches/:id", (req, res) => {
       }
     })
     .catch(err => res.status(500).json({
-      error: err.message
+      error: err.message,
+      throw: err
     }));
 });
 
 // Eliminar un coche
 app.delete("/coches/:id", (req, res) => {
   const cocheId = req.params.id;
-  borraCoche(cocheId)
+  return borraCoche(cocheId)
     .then(cocheEliminado => {
       if (cocheEliminado) {
         res.json(cocheEliminado);
@@ -73,7 +77,8 @@ app.delete("/coches/:id", (req, res) => {
       }
     })
     .catch(err => res.status(500).json({
-      error: err.message
+      error: err.message,
+      thorw: err
     }));
 });
 
