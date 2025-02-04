@@ -11,18 +11,17 @@ const { buscaTodos, buscaPorId, crearNuevoCoche, actualizaPrecio, borraCoche } =
 
 // Obtener todos los coches
 app.get("/coches", (req, res) => {
-  return buscaTodos()
+  buscaTodos()
     .then(coches => res.json(coches))
     .catch(err => res.status(500).json({
-      error: err.message,
-      throw: err
+      error: err.message
     }));
 });
 
 // Obtener un coche por ID
 app.get("/coches/:id", (req, res) => {
   const cocheId = req.params.id;
-  return buscaPorId(cocheId)
+  buscaPorId(cocheId)
     .then(coche => {
       if (coche) {
         res.json(coche);
@@ -31,27 +30,25 @@ app.get("/coches/:id", (req, res) => {
       }
     })
     .catch(err => res.status(500).json({
-      error: err.message,
-      throw: err
+      error: err.message
     }));
 });
 
 // Crear un nuevo coche
 app.post("/coches", (req, res) => {
   const { marca, modelo, color, precio } = req.body;
-  return crearNuevoCoche(marca, modelo, color, precio)
+  crearNuevoCoche(marca, modelo, color, precio)
     .then(coche => res.status(201).json(coche))
     .catch(err => res.status(500).json({
-      error: err.message,
-      throw: err
+      error: err.message
     }));
 });
 
 // Actualizar el precio de un coche existente
 app.put("/coches/:id", (req, res) => {
   const cocheId = req.params.id;
-  const { nuevoPrecio } = req.body;
-  return actualizaPrecio(cocheId, nuevoPrecio)
+  const {nuevoPrecio} = req.body;
+  actualizaPrecio(cocheId, nuevoPrecio)
     .then(cocheActualizado => {
       if (cocheActualizado) {
         res.json(cocheActualizado);
@@ -60,15 +57,14 @@ app.put("/coches/:id", (req, res) => {
       }
     })
     .catch(err => res.status(500).json({
-      error: err.message,
-      throw: err
+      error: err.message
     }));
 });
 
 // Eliminar un coche
 app.delete("/coches/:id", (req, res) => {
   const cocheId = req.params.id;
-  return borraCoche(cocheId)
+  borraCoche(cocheId)
     .then(cocheEliminado => {
       if (cocheEliminado) {
         res.json(cocheEliminado);
@@ -77,8 +73,7 @@ app.delete("/coches/:id", (req, res) => {
       }
     })
     .catch(err => res.status(500).json({
-      error: err.message,
-      thorw: err
+      error: err.message
     }));
 });
 
